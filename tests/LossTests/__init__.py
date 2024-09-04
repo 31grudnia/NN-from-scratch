@@ -1,0 +1,2 @@
+from nn_with_py.LossFunctions.Loss import Loss
+from nn_with_py.LossFunctions.LossCategoricalCrossentropy import Loss_CategoricalCrossentropy
