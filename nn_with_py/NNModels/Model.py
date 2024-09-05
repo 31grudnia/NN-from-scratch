@@ -114,7 +114,7 @@ class Model:
 
                 # Get predictions and calculate accuracy
                 predictions = self.output_layer_activation.predictions(output)
-                accuracy = self.accuracy.calculate(predictions, Y)
+                accuracy = self.accuracy.calculate(predictions, batch_Y)
 
                 self.backward(output, batch_Y)
 

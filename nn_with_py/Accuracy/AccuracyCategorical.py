@@ -5,7 +5,7 @@ from .Accuracy import Accuracy
 
 class Accuracy_Categorical(Accuracy):
 
-    def __init__(self, Y) -> None:
+    def init(self, Y) -> None:
         pass
 
 

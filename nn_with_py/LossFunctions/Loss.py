@@ -35,11 +35,11 @@ class Loss:
         return regularization_loss
     
 
-    def remember_trainabler_layers(self, trainable_layers):
+    def remember_trainable_layers(self, trainable_layers):
         self.trainable_layers = trainable_layers
 
 
-    def calculate(self, output, y, *, include_regularization=True):
+    def calculate(self, output, y, *, include_regularization=False):
         sample_losses = self.forwad(output, y)
         data_loss = np.mean(sample_losses)
 
@@ -52,7 +52,7 @@ class Loss:
         return data_loss, self.regularization_loss()
     
 
-    def calculate_accumulated(self, *, include_regularization=True):
+    def calculate_accumulated(self, *, include_regularization=False):
         data_loss = self.accumulated_sum / self.accumulated_count
         
         if not include_regularization:
