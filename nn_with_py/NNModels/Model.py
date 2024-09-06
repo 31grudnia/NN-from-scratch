@@ -75,6 +75,10 @@ class Model:
         
         self.accuracy.init(Y)
         train_steps = 1
+        self.history_train_loss = []
+        self.history_train_acc = []
+        self.history_test_loss = []
+        self.history_test_acc = []
 
         # Calculate number of steps
         if batch_size is not None:
@@ -135,6 +139,9 @@ class Model:
             epoch_loss = epoch_data_loss + epoch_regularization_loss
             epoch_accuracy = self.accuracy.calculate_accumulated()
 
+            self.history_train_acc.append(epoch_accuracy)
+            self.history_train_loss.append(epoch_loss)
+
             print(f"training, " + 
                     f"acc: {epoch_accuracy:.3f}, " +
                     f"loss: {epoch_loss:.3f} (" +
@@ -143,6 +150,8 @@ class Model:
                     f"lr: {self.optimizer.current_learning_rate}")
             if validation_data is not None:
                 self.evaluate(*validation_data, batch_size=batch_size)
+        
+        return self.history_train_loss, self.history_train_acc, self.history_test_loss, self.history_test_acc
     
 
     def evaluate(self, X_val, Y_val, *, batch_size=None):
@@ -180,10 +189,14 @@ class Model:
         validation_loss = self.loss.calculate_accumulated()
         validation_accuracy = self.accuracy.calculate_accumulated()
 
+        self.history_test_acc.append(validation_accuracy)
+        self.history_test_loss.append(validation_loss)
+
         print(f"validation, " + 
                 f"acc: {validation_accuracy:.3f}, " +
                 f"loss: {validation_loss:.3f}")
         
+
     def predict(self, X, *, batch_size=None):
 
         # Def value if batch size is not set
